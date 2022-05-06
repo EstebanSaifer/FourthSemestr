@@ -77,7 +77,7 @@ public class MatrixTest {
         matrix.determination(); // flag работает
     }
 
-    @Test (expected = MatrixException.class)
+    @Test
     public void test5 () throws MatrixException{
         Matrix matrix = new Matrix(5);
 
@@ -87,5 +87,6 @@ public class MatrixTest {
             }
         }
         matrix.determination();
+        assertEquals(matrix.determination(), 0, 0.0001);
     }
 }

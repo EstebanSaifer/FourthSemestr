@@ -4,5 +4,5 @@ public interface IMatrix {
 
     void changeElem(int x, int y, double newElem) throws MatrixException;
 
-    double determination () throws MatrixException;
+    double determination () ;
 }

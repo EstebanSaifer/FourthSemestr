@@ -1,18 +1,7 @@
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Matrix implements Comparable<Matrix>, IMatrix {
-
-    // Напишите класс Matrix (квадратная матрица произвольного вида). Размерность матрицы N задается
-    // при создании объекта и в дальнейшем не меняется. Матрицу хранить в виде одномерного массива
-    // длины NxN. В классе сделайте конструктор по размерности, добавьте методы equals и hashCode.
-
-    // Добавить в класс Matrix поле для хранения вычисленного значения определителя (кэш для значения
-    // определителя) и флаг, который означает, что это значение действительно на данный момент. Методы,
-    // изменяющие матрицу, должны сбрасывать этот флаг. При установленном флаге метод вычисления
-    // определителя должен просто возвращать сохраненное значение без пересчета.
-
-    //Напишите компаратор для матриц, который сравнивает определители матриц
+public class Matrix implements IMatrix {
 
     private int N;
     private double[] arr;
@@ -24,11 +13,6 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
     public Matrix(int N) {
         this.N = N;
         this.arr = new double[N * N];
-    }
-
-    public Matrix() {
-        this.N = 0;
-        this.arr = new double[0];
     }
 
     public int getN() {
@@ -51,12 +35,6 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
     }
 
     @Override
-    public int compareTo(Matrix o) {
-        if (Math.abs(determinator - determinator) < 1e7) return 0;
-        return (int) (determinator - o.determinator);
-    }
-
-    @Override
     public double getElem(int x, int y) throws MatrixException {
         if (x > getN() || y > getN() || x < 0 || y < 0) throw new MatrixException("неккоректные данные");
         return arr[x + getN() * y];
@@ -68,6 +46,7 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
             throw new MatrixException("неккоректные данные");
         }
         arr[x + N * y] = newElem;
+        flag = false;
     }
 
     public int rightViewOfMatrix (double[] arr, int N) {
@@ -88,8 +67,9 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
                     tempt = arr[index + N * j];
                     arr[index + N * j] = arr[k + N * j];
                     arr[k + N * j] = tempt;
-                    y++;
+
                 }
+                y++;
             }
             if (max == 0) { y = 0;}
         }
@@ -97,7 +77,7 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
     }
 
     @Override
-    public double determination() throws MatrixException{
+    public double determination() {
 
         if(flag) {return determinator;}
         determinator = 1;
@@ -110,12 +90,18 @@ public class Matrix implements Comparable<Matrix>, IMatrix {
             return arr[0] * arr[3] - arr [1] * arr[2];
         }
 
+        y = 0;
         for (int i = 0; i < N - 1 ; i++) {
-            for (int j = 1 + i; j < N; j++) { //проверка на каждое вычитание
 
                 y = rightViewOfMatrix(arr,getN());
 
-                if ( arr[i + N * i] == 0 ) throw new MatrixException("На ноль делить нельзя");
+                if ( arr[i + N * i] == 0 )  {
+                    determinator = 0;
+                    flag = true;
+                    return determinator;
+                }
+
+            for (int j = 1 + i; j < N; j++) { //проверка на каждое вычитание
                 double time = -1 * arr[i + N * j] /arr[i + N * i];   //работа с норм матрицей
                 if(arr[i + N * j] != 0 ) {
                     for(int k = 0; k < N; k++) {
