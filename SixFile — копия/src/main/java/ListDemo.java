@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.util.Comparator;
 
 public class ListDemo {
 
@@ -21,8 +22,6 @@ public class ListDemo {
         for (Human humanss : humans) {
             if (humanss.equals(human)) {
                 continue;
-//                newHuman.add(new Human(human)); //почему не работает :(
-//                newHuman.remove(new Human(human));
             }
             newHuman.add(new Human(humanss));
         }
@@ -31,7 +30,7 @@ public class ListDemo {
 
     public static List<Set<Integer>> mnojestva (List<Set<Integer>> sets, Set<Integer> set) {
 
-        List<Set<Integer>> newSet = new ArrayList<>(); //создаем списком множеств в который будем записывать ответ
+        List<Set<Integer>> newSet = new ArrayList<>();
 
         for (Set<Integer> setss : sets) {
 
@@ -44,10 +43,6 @@ public class ListDemo {
         }
         return newSet;
     }
-
-    // Напишите метод класса ListDemo, который получает на вход список, состоящий из
-    // объектов типа Human и его производных классов. Результат — множество людей из
-    // входного списка с максимальным возрастом.
 
     public static List<Human> getHumanMaxAge (List<Human> humans) {
 
@@ -91,6 +86,38 @@ public class ListDemo {
         for (int k : map.keySet()) {
             newMap.put(k, map.get(k).getAge());
         }
+        return newMap;
+    }
+
+    /**
+     *  По множеству объектов типа Human постройте отображение, которое целому числу
+     *      (возраст человека) сопоставляет список всех людей данного возраста из входного множества.
+     */
+
+    public static Map<Integer, List<Human>> lastTask(Set <Human> set) {
+
+        Map<Integer, List<Human>> newMap = new HashMap<>();
+
+        for (Human human : set) {
+            newMap.putIfAbsent(human.getAge(), new ArrayList<>());
+            newMap.get(human.getAge()).add(human);
+        }
+        // это не надо!
+//        for (Map.Entry<Integer, List<Human>> tempt : newMap.entrySet()) {
+//            tempt.getValue().sort(new Comparator<Human>() {
+//                @Override
+//                public int compare(Human human1, Human human2) {
+//                    int nameCompare = human1.getPatronymic().compareTo(human2.getPatronymic());
+//                    if (nameCompare == 0) {
+//                        nameCompare = human1.getFirstName().compareTo(human2.getFirstName());
+//                        if (nameCompare == 0) {
+//                            return human1.getLastName().compareTo(human2.getLastName());
+//                        }
+//                    }
+//                    return nameCompare;
+//                }
+//            });
+//        }
         return newMap;
     }
 }

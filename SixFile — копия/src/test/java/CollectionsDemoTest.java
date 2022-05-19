@@ -9,7 +9,7 @@ public class CollectionsDemoTest {
 
     @Test
     public void test0() {
-        CollectionsDemo collectionsDemo = new CollectionsDemo();
+        //CollectionsDemo collectionsDemo = new CollectionsDemo();
         ArrayList<String> list = new ArrayList<String>();
         list.add("qqqqqq");
         list.add("oqoqoq");

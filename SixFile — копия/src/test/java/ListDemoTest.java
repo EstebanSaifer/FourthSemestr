@@ -10,7 +10,7 @@ public class ListDemoTest {
     @Test
     public void listOfTheSamePatronymicTest() {
 
-        ArrayList<Human> humans = new ArrayList<Human>();
+        ArrayList<Human> humans = new ArrayList<>();
 
         humans.add(new Human("Яша", "Иванов", "Отчество", 9));
         humans.add(new Human("Яна", "Иванов", "Отчество", 8));
@@ -55,12 +55,7 @@ public class ListDemoTest {
     }
 
     @Test
-    public void mnojestvaTest() {
-
-        // тест делает сначала множесва с числами, потом множество
-        // с числами, которые не должны встречаться в списке множеств,
-        // подаваемых в метод, записываем в newSet множество
-        // в котором нет чисел из множества setToDo
+    public void MapTest() {
 
         ArrayList<Set<Integer>> sets = new ArrayList<>();
 
@@ -148,5 +143,50 @@ public class ListDemoTest {
         list.add(3);
 
         assertEquals(list,ListDemo.peopleWhoMoreThan18AndContainsInFirstMap(map));
+    }
+
+    @Test
+    public void peopleWithEgualsIdAndAgeTest () {
+
+        Map<Integer, Human> map = new HashMap<>();
+
+        map.put(0, new Human("a", "aa", "aaa", 9));
+        map.put(1, new Human("b", "bb", "bbb", 19));
+        map.put(2, new Human("c", "cc", "ccc", 18));
+        map.put(3, new Human("d", "dd", "ddd", 2147483647));
+
+        List<Integer> list = new ArrayList<>();
+
+        Map <Integer , Integer> map1 = new HashMap<>();
+        map1.put(0, 9);
+        map1.put(1, 19);
+        map1.put(2, 18);
+        map1.put(3, 2147483647);
+
+        assertEquals(map1,ListDemo.peopleWithEgualsIdAndAge(map));
+    }
+
+    @Test
+    public void lastTaskTest() {
+
+        Map<Integer, Human> map = new HashMap<>();
+        Set<Human> sets = new HashSet<>();
+
+        sets.add(new Human("a", "aa", "aaa", 9));
+        sets.add(new Human("b", "bb", "bbb", 9));
+        sets.add(new Human("c", "cc", "ccc", 18));
+
+        Map<Integer, List<Human>> newMap = new HashMap<>();
+
+        List<Human> human0 = new ArrayList<>();
+        human0.add(new Human("b", "bb", "bbb", 9));
+        human0.add(new Human("a", "aa", "aaa", 9));
+
+        newMap.put(9,human0);
+        List<Human> human1 = new ArrayList<>();
+        human1.add(new Human("c", "cc", "ccc", 18));
+        newMap.put(18, human1);
+
+        assertEquals(newMap, ListDemo.lastTask(sets));
     }
 }
